@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hello user</title>
+</head>
+<body>
+<h1>Страница <span>[[${#request.remoteUser}]]</span></h1>
+<div>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>name</th>
+            <th>surname</th>
+            <th>email</th>
+            <th>roles</th>
+            <th>update</th>
+        </tr>
+
+        <tr th:each="user :${login}">
+            <td th:text="${user.getId()}"></td>
+            <td th:text="${user.getName()}"></td>
+            <td th:text="${user.getSurname()}"></td>
+            <td th:text="${user.getEmail()}"></td>
+            <td th:text="${user.getRoles()}"></td>
+
+
+            <td>
+                <form method="get" th:action="@{/user/edit/{id}(id=${user.id})}">
+                    <input type="submit" value="Обновить">
+                </form>
+            </td>
+        </tr>
+    </table>
+<br>
+    <button class="buttonLogout" onclick="window.location.href = '/logout';">Logout</button>
+</div>
+</body>
+</html>

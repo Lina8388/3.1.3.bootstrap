@@ -21,7 +21,7 @@ public class User implements UserDetails {
 
 
     @Column(name = "password ")
-    private String password;
+    private String password="";
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
@@ -43,12 +43,6 @@ public class User implements UserDetails {
     private int age;
 
     public User() {
-    }
-
-    public User(String name, String surname, String email) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
     }
 
     public User(Long id, String name, int age, String password, Set<Role> roles) {

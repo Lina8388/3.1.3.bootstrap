@@ -64,20 +64,19 @@ public class AdminController {
     }
 
 
-    @GetMapping(value = "admin/edit/{id}")
+   /* @GetMapping(value = "admin/edit/{id}")
     public String editUserForm(@PathVariable("id") Long id, Model model) {
         model.addAttribute("AllRoles", userService.getListRoles());
         model.addAttribute("user", userService.getUser(id));
         return "edit";
-    }
+    }*/
 
 
     @PostMapping(value = "admin/update/{id}")
     public String update(@ModelAttribute("user") User user,
-                         @PathVariable("id") Long id,
                          @RequestParam(value = "checked", required = false) String[] checked) {
 
-        userService.update(id, user, checked);
+        userService.update(user, checked);
         return "redirect:/admin";
     }
 

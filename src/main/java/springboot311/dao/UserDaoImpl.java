@@ -18,12 +18,6 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Override
     public User getUserByName(String name) {
@@ -86,31 +80,11 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public User update(Long id, User user, String[] roleNames) {
-        User toBeUpdated = getUser(id);
-        toBeUpdated.setName(user.getName());
-        toBeUpdated.setSurname(user.getSurname());
-        toBeUpdated.setEmail(user.getEmail());
-        toBeUpdated.setRoles(getRolesByRoleNames(roleNames));
-        toBeUpdated.setAge(user.getAge());
-        if(user.getPassword()!=""){
-        toBeUpdated.setPassword(passwordEncoder.encode(user.getPassword()));}
-
-        return entityManager.merge(toBeUpdated);
+    public User update(User user, String[] roleNames) {
+        user.setRoles(getRolesByRoleNames(roleNames));
+        return entityManager.merge(user);
     }
 
-    @Override
-    public User update(Long id, User user) {
-        User toBeUpdated = getUser(id);
-        toBeUpdated.setName(user.getName());
-        toBeUpdated.setSurname(user.getSurname());
-        toBeUpdated.setEmail(user.getEmail());
-        toBeUpdated.setAge(user.getAge());
-        if(user.getPassword()!=""){
-        toBeUpdated.setPassword(passwordEncoder.encode(user.getPassword()));}
-
-        return entityManager.merge(toBeUpdated);
-    }
 
     @Override
     public void removeUser(Long id) {

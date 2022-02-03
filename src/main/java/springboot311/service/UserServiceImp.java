@@ -1,6 +1,7 @@
 package springboot311.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import springboot311.dao.UserDao;
@@ -17,8 +18,10 @@ public class UserServiceImp implements UserService {
     @Autowired
     private UserDao userDao;
 
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-   // @Transactional(readOnly = true)
+
+    // @Transactional(readOnly = true)
     @Override
     public Set<Role> getListRoles() {
         return userDao.getListRoles();
@@ -33,20 +36,20 @@ public class UserServiceImp implements UserService {
     @Transactional
     @Override
     public void add(User user) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         userDao.add(user);
     }
 
     @Transactional
     @Override
-    public User update(Long id, User updateUser, String[] roleNames) {
-        return userDao.update(id, updateUser, roleNames);
+    public User update(User user, String[] roleNames) {
+        if (!user.getPassword().equals(getUser(user.getId()).getPassword())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        return userDao.update(user, roleNames);
     }
 
-    @Transactional
-    @Override
-    public User update(Long id, User updateUser) {
-        return userDao.update(id, updateUser);
-    }
 
     @Transactional
     @Override

@@ -17,9 +17,9 @@ public interface UserDao {
 
     void add(User user);
 
-    User update(Long id, User updateUser, String[] roleNames);
+    User update(User updateUser, String[] roleNames);
 
-    User update(Long id, User updateUser);
+    /*User update(Long id, User updateUser);*/
 
     void removeUser(Long id);
 

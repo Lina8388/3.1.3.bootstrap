@@ -12,9 +12,7 @@ public interface UserService {
 
     void add(User user);
 
-    User update(Long id, User updateUser, String[] roleNames);
-
-    User update(Long id, User updateUser);
+    User update(User updateUser, String[] roleNames);
 
     void removeUser(Long id);
 

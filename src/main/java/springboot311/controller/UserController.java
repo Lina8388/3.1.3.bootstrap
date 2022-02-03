@@ -32,13 +32,13 @@ public class UserController {
     }
 
 
-    @GetMapping(value = "user/edit/{id}")
+  /*  @GetMapping(value = "user/edit/{id}")
     public String editUserForm(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getUser(id));
         return "editUser";
-    }
+    }*/
 
-
+/*
     @PostMapping(value = "user/update/{id}")
     public String update(@ModelAttribute("user") User user,
                          @PathVariable("id") Long id) {
@@ -51,6 +51,6 @@ public class UserController {
                                Principal principal) {
         model.addAttribute("login", userService.getUserByName(principal.getName()));
         return "user";
-    }
+    }*/
 
 }

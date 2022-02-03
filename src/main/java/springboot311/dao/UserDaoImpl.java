@@ -34,6 +34,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return entityManager
+                .createQuery(" SELECT u FROM User u WHERE u.email =:email", User.class)
+                .setParameter("email", email)
+                .getSingleResult();
+    }
+
+    @Override
     public User getUser(Long id) {
         return entityManager.find(User.class, id);
     }
@@ -84,7 +92,9 @@ public class UserDaoImpl implements UserDao {
         toBeUpdated.setSurname(user.getSurname());
         toBeUpdated.setEmail(user.getEmail());
         toBeUpdated.setRoles(getRolesByRoleNames(roleNames));
-        toBeUpdated.setPassword(passwordEncoder.encode(user.getPassword()));
+        toBeUpdated.setAge(user.getAge());
+        if(user.getPassword()!=""){
+        toBeUpdated.setPassword(passwordEncoder.encode(user.getPassword()));}
 
         return entityManager.merge(toBeUpdated);
     }
@@ -95,7 +105,9 @@ public class UserDaoImpl implements UserDao {
         toBeUpdated.setName(user.getName());
         toBeUpdated.setSurname(user.getSurname());
         toBeUpdated.setEmail(user.getEmail());
-        toBeUpdated.setPassword(passwordEncoder.encode(user.getPassword()));
+        toBeUpdated.setAge(user.getAge());
+        if(user.getPassword()!=""){
+        toBeUpdated.setPassword(passwordEncoder.encode(user.getPassword()));}
 
         return entityManager.merge(toBeUpdated);
     }

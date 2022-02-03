@@ -1,42 +1,107 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      lang="en">
-
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hello user</title>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <link rel="icon" href="http://electronika.spb.ru/favicon.ico" type="image/x-icon">
+
+    <title>User page</title>
+
+
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          rel="stylesheet">
+
+
+    <link href="/webjars/bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!--  <script type="text/javascript" src="../static/main.js" th:src="@{/main.js}"></script>-->
+
+
 </head>
 <body>
-<h1>Страница <span>[[${#request.remoteUser}]]</span></h1>
-<div>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>name</th>
-            <th>surname</th>
-            <th>email</th>
-            <th>roles</th>
-            <th>update</th>
-        </tr>
-
-        <tr th:each="user :${login}">
-            <td th:text="${user.getId()}"></td>
-            <td th:text="${user.getName()}"></td>
-            <td th:text="${user.getSurname()}"></td>
-            <td th:text="${user.getEmail()}"></td>
-            <td th:text="${user.getRoles()}"></td>
 
 
-            <td>
-                <form method="get" th:action="@{/user/edit/{id}(id=${user.id})}">
-                    <input type="submit" value="Обновить">
-                </form>
-            </td>
-        </tr>
-    </table>
-<br>
-    <button class="buttonLogout" onclick="window.location.href = '/logout';">Logout</button>
+<!--верхняя панель-->
+<nav class="navbar  navbar-dark bg-dark ">
+
+    <a class="navbar-brand" href="#">
+        <b> <span sec:authentication="principal.email"/></b>
+        <span> with roles:</span>
+        <td th:text="${principal}"></td>
+    </a>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="nav-item">
+            <a class="nav-link" href='/logout'>Logout</a>
+        </li>
+    </ul>
+</nav>
+<!--верхняя панель-->
+
+<div class="container-fluid">
+    <div class="row ">
+
+        <!--боковая белая панель-->
+        <nav class="col-md-2 m-0 p-0 pt-4 ">
+            <div class="sidebar-sticky">
+                <br>
+                <a href="/admin" class="nav-link  btn-block" role="button">Admin</a>
+                <a href="/user" class="btn btn-primary btn-block active" role="button">User</a>
+            </div>
+        </nav>
+
+        <!--правая серая панель-->
+
+
+        <div class="container col-md-10 pt-4 bg-light ">
+            <br>
+            <h1 class="h2">User information-page</h1>
+
+            <div class="card bg-light ">
+                <br>
+                <ul class="px-3">
+                    <h5>About user</h5>
+                </ul>
+                <div class="table-responsive">
+
+                    <div class="card">
+                        <div class="card-body">
+
+                            <table class="table table-striped bg-white">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Age</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+
+                                </tr>
+                                </thead>
+
+                                <tr th:each="user :${login}">
+                                    <td th:text="${user.getId()}"></td>
+                                    <td th:text="${user.getName()}"></td>
+                                    <td th:text="${user.getSurname()}"></td>
+                                    <td th:text="${user.getAge()}"></td>
+                                    <td th:text="${user.getEmail()}"></td>
+                                    <td th:text="${user.getRolesString()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <canvas class="" height="900"></canvas>
+        </div>
+    </div>
 </div>
 </body>
 </html>

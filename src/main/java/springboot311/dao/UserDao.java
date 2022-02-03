@@ -9,6 +9,8 @@ public interface UserDao {
 
     User getUserByName(String name);
 
+    public User getUserByEmail(String email);
+
     User getUser(Long id);
 
     List<User> getListUsers();

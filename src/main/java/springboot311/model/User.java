@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +19,8 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+
+    @Column(name = "password ")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -26,6 +28,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
 
     @Column(name = "name")
     private String name;
@@ -36,6 +39,9 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "age")
+    private int age;
+
     public User() {
     }
 
@@ -45,17 +51,29 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public User(Long id, String name, String password, Set<Role> roles) {
+    public User(Long id, String name, int age, String password, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.roles = roles;
+        this.age=age;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public Set<Role> getRoles() {
         return roles;
     }
 
+    public String getRolesString() {
+        return roles.toString().replaceAll("^\\[|\\]$","").replaceAll("ROLE_","");
+    }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;

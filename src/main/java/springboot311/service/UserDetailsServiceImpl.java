@@ -22,9 +22,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userDao = userDao;
     }
 
-    @Override
+   /* @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         return userDao.getUserByName(name);
+    }*/
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userDao.getUserByEmail(email);
     }
 
 }

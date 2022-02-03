@@ -10,6 +10,8 @@ import springboot311.dao.UserDao;
 import springboot311.model.User;
 import springboot311.service.UserService;
 
+import java.security.Principal;
+
 
 @Controller
 @RequestMapping()
@@ -36,15 +38,19 @@ public class AdminController {
 
 
     @GetMapping("admin")
-    public String getListUsers(Model model) {
+    public String getListUsers(Model model, Principal principal) {
         model.addAttribute("users", userService.getListUsers());
+        model.addAttribute("principal", userService.getUserByName(principal.getName()).getRolesString() );
+
+        model.addAttribute("AllRoles", userService.getListRoles());
         return "users";
     }
 
     @GetMapping("admin/new")
-    public String newUser(Model model) {
+    public String newUser(Model model,Principal principal) {
         model.addAttribute("AllRoles", userService.getListRoles());
         model.addAttribute("user", new User());
+        model.addAttribute("principal", userService.getUserByName(principal.getName()).getRolesString() );
         return "new";
     }
 
@@ -82,5 +88,7 @@ public class AdminController {
         userService.removeUser(id);
         return "redirect:/admin";
     }
+
+
 
 }

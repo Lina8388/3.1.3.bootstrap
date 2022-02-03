@@ -25,8 +25,9 @@ public class UserController {
 
 
     @GetMapping(value = "user")
-    public String getGeneralPage(Model model, Authentication authentication) {
+    public String getGeneralPage(Model model, Authentication authentication, Principal principal) {
         model.addAttribute("login",  authentication.getPrincipal());
+        model.addAttribute("principal",  userService.getUserByName(principal.getName()).getRolesString());
         return "user";
     }
 

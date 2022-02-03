@@ -1,42 +1,144 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      lang="en">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>new user</title>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <link rel="icon" href="http://electronika.spb.ru/favicon.ico" type="image/x-icon">
+
+    <title>Admin panel</title>
+
+
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          rel="stylesheet">
+
+
+    <link href="/webjars/bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../static/main.js" th:src="@{/main.js}"></script>
+
+
 </head>
 <body>
-<form th:method="Post" th:action="@{/admin}" th:object="${user}">
-    <div>
-        <br>
-        <label for="name">Name</label>
-        <input type="text" th:field="*{name}" id="name"/>
-        <br>
-        <br>
-        <label for="surname">Surname</label>
-        <input type="text" th:field="*{surname}" id="surname"/>
-        <br>
-        <br>
-        <label for="email">Email</label>
-        <input type="text" th:field="*{email}" id="email"/>
-        <br>
-        <br>
-        <br>
-        <br>
-        <td th:each="role : ${AllRoles}">
-            <div>
-                <input type="checkbox" name="checked"
-                       th:text="${role.getRole()}"
-                       th:value="${role.getRole()}">
+
+<!--верхняя панель-->
+<nav class="navbar  navbar-dark bg-dark ">
+
+    <a class="navbar-brand" href="#">
+        <b> <span sec:authentication="principal.email"/></b>
+        <span> with roles:</span>
+        <td th:text="${principal}"></td>
+    </a>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="nav-item">
+            <a class="nav-link" href='/logout'>Logout</a>
+        </li>
+    </ul>
+</nav>
+<!--верхняя панель-->
+
+<div class="container-fluid">
+    <div class="row ">
+
+        <!--боковая белая панель-->
+        <nav class="col-md-2 m-0 p-0 pt-4 ">
+            <div class="sidebar-sticky">
+                <br>
+                <a href="/admin" class="btn btn-primary btn-block active" role="button">Admin</a>
+                <a href="/user" class="nav-link  btn-block" role="button">User</a>
             </div>
-        </td>
+        </nav>
 
-        <br>
-        <br>
-        <input type="submit" value="Add User"/>
+        <!--боковая серая панель-->
+
+        <div class="container col-md-10 pt-4 bg-light ">
+            <br>
+            <h1 class="h2">Admin panel</h1>
+            <ul class="nav nav-tabs ">
+                <li class="nav-item">
+                    <a class="nav-link " href="/admin">Users table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/new">New User</a>
+                </li>
+            </ul>
+            <div class="card bg-light ">
+                <br>
+                <ul class="px-3">
+                    <h5>Add new user</h5>
+                </ul>
+                <div class="table-responsive">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-striped bg-white">
+                                <thead>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                        </div>
+                                        <div class="col-sm text-center">
+
+                                            <form th:method="Post" th:action="@{/admin}" th:object="${user}">
+
+                                                <label for="name"><b>First name</b></label>
+                                                <input type="text" class="form-control " th:field="*{name}" id="name">
+                                                <br>
+                                                <br>
+                                                <label for="surname"><b>Last name</b></label>
+                                                <input type="text" class="form-control" th:field="*{surname}"
+                                                       id="surname"/>
+                                                <br>
+                                                <br>
+                                                <label for="age"><b>Age</b></label>
+                                                <input type="number" class="form-control" th:field="*{age}" id="age"/>
+                                                <br>
+                                                <br>
+                                                <label for="email"><b>Email</b></label>
+                                                <input type="email" class="form-control" th:field="*{email}"
+                                                       id="email"/>
+                                                <br>
+                                                <br>
+                                                <label for="password"><b>Password</b></label>
+                                                <input type="password" class="form-control" th:field="*{password}"
+                                                       id="password"/>
+                                                <br>
+                                                <br>
+                                                <div class="form-group">
+                                                    <label><b>Role</b></label>
+                                                    <select class="form-control" size="2" multiple="multiple"
+                                                            name="checked">
+
+                                                        <option th:each="role : ${AllRoles}"
+
+                                                                th:text="${role.getRole()}"
+                                                                th:value="${role.getRole()}"
+                                                                th:selected="${role.getRole()} == ROLE_USER"
+
+                                                        ></option>
+                                                    </select>
+                                                </div>
+                                                <input type="submit" class="btn btn-success" value="Add new user"/>
+                                            </form>
+                                        </div>
+                                        <div class="col-sm-3">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <canvas class="" height="900"></canvas>
+        </div>
     </div>
-
-</form>
+</div>
 </body>
 </html>

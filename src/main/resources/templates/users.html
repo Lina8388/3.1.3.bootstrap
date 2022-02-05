@@ -116,7 +116,7 @@
 
 
                                     <!-- модальное окно update-->
-                                    <div aria-hidden="true" aria-labelledby="exampleModalLabel2" class="modal fade"
+                                    <div aria-hidden="true" aria-labelledby="exampleModalLabel2" id="edit" class="modal fade"
                                          th:id="edit + ${user.id}"
                                          role="dialog"
                                          tabindex="-1">
@@ -171,7 +171,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label>Password
-                                                                        <input class="form-control" id="password"
+                                                                        <input class="form-control" id="password" name="password"
                                                                                type="password" th:value="*{password}"/></label>
                                                                 </div>
                                                                 <div class="form-group">
@@ -264,7 +264,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label>Password
-                                                                        <input class="form-control" id="password"
+                                                                        <input class="form-control" id="password" name="password"
                                                                                type="password" th:value="*{password}"
                                                                                readonly/></label>
                                                                 </div>

@@ -20,9 +20,9 @@ public class User implements UserDetails {
 
     private String name;
 
-    @Column(unique = true)
     private String surname;
 
+    @Column(unique = true)
     private String email;
 
     private int age;
